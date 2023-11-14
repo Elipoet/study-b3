@@ -1,6 +1,10 @@
 from app import app
 
-from flask import render_template
+from flask import render_template, flash
+
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 @app.route("/")
 def index():
@@ -19,3 +23,23 @@ def page_not_found(e):
 @app.errorhandler(500)
 def page_not_found(e):
     return render_template("error_pages/404.html"), 500
+
+# Création Formulaire
+class ConnexionForm(FlaskForm):
+    name = StringField("Nom Utilisateur", validators=[DataRequired()])
+    submit = SubmitField("Soumettre")
+
+# Page Connexion
+@app.route('/connexion', methods=['GET', 'POST'])
+def connexion():
+    name = None
+    form = ConnexionForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        form.name.data= ''
+        # flash("Connexion réussie")
+
+    return render_template("public/connexion.html",
+                           name = name,
+                           form = form
+                           )
