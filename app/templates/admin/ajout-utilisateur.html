@@ -1,0 +1,51 @@
+{% extends "admin/templates/admin-template.html" %}
+
+{% block title %}Admin connexion{% endblock %}
+
+{% block main %}
+
+{% if name %}
+    <h1>Utilisateurs Goldenkline</h1>
+    <hr>
+    <h2>Liste : </h2>
+    <br>
+
+{% else %}
+    <h1>Ajout Utilisateurs :</h1>
+    <hr>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.name.label(
+            class="form-label") }}
+        {{ form.name(
+            class="form-control"
+        ) }}
+        <br>
+        {{ form.email.label(
+            class="form-label") }}
+        {{ form.email(
+            class="form-control"
+        ) }}
+        <br>
+        {{ form.password.label(
+            class="form-label") }}
+        {{ form.password(
+            class="form-control", type="password"
+        ) }}
+        <br>
+        {{ form.submit(
+            class="btn btn-secondary"
+        ) }}
+    </form>
+
+{% endif %}
+<br><br>
+<table class="table table-hover table-bordered table-striped">
+    {% for our_user in our_users %}
+      <tr>
+      <td>{{our_user.id}} : {{our_user.name}} - {{our_user.email}} & {{our_user.password}}</td>
+      </tr>
+    {% endfor %}
+</table>
+{% endblock %}

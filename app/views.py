@@ -5,6 +5,8 @@ from flask import render_template, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 @app.route("/")
 def index():
@@ -24,7 +26,7 @@ def page_not_found(e):
 def page_not_found(e):
     return render_template("error_pages/404.html"), 500
 
-# Création Formulaire
+# Création Formulaire Connexion
 class ConnexionForm(FlaskForm):
     name = StringField("Nom Utilisateur", validators=[DataRequired()])
     submit = SubmitField("Soumettre")
